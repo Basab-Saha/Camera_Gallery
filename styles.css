@@ -121,3 +121,21 @@ video {
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
+
+.orange{
+    background-color:rgb(219, 191, 139) ;
+    background-blend-mode:color-burn ;
+}
+.green{
+    background-color:rgb(116, 192, 116) ;
+    background-blend-mode:color-burn ;
+}
+.pink{
+    background-color:rgb(234, 209, 234) ;
+    background-blend-mode:color-burn ;
+}
+.transparent{
+    background-color:transparent ;
+    background-blend-mode:color-burn ;
+}
+
