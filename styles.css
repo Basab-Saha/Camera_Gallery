@@ -101,7 +101,23 @@ video {
 
 .timer-cont{
     position: absolute;
-    bottom: 10rem;
+    bottom: 6rem;
     left: 5rem;
     color: white;
+}
+
+.filter-cont{
+    position: absolute;
+    left: 5rem;
+    top:calc((100%  -  15rem)/2);
+    background-color: aqua;
+    width: 8rem;
+    height: 18rem;
+}
+.filter{
+    height: 4.5rem;
+    background-image: url("https://th.bing.com/th/id/OIP.dyq9X_iPvhKnlmb1VoIBqgHaE6?rs=1&pid=ImgDetMain");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }

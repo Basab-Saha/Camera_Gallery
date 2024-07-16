@@ -31,6 +31,7 @@ The MediaDevices interface of the Media Capture and
  like cameras and microphones, as well as screen sharing. 
  In essence, it lets you obtain access to any hardware source of media data.
 */
+
 navigator.mediaDevices.getUserMedia(constraints) // (3)
 .then( (stream)=>{
     video.srcObject=stream; //(3)
@@ -53,7 +54,8 @@ navigator.mediaDevices.getUserMedia(constraints) // (3)
     })
 
     
-    
+    //recorder stop hole recording je data ache chunk array te
+    //seta ke ekta video file e convert kore download korbe
     recorder.addEventListener("stop",(e)=>{
         
         //stored data ke convert koro into -->video
@@ -70,6 +72,7 @@ navigator.mediaDevices.getUserMedia(constraints) // (3)
 
     })
 } )
+
 //opor e eta kintu ekta promise , mane jodi stream ase tobei recorder
 //instanciated hobe nahole hobe na jodi camera start i  na kori
 
@@ -95,11 +98,17 @@ recordBtnCont.addEventListener("click",(e)=>{
     }
 })
 
+//timerID is a global variable , it will store the setInterval id
 let timerID;
 let counter=0;
 let timer=document.querySelector(".timer");
 
 function startTimer(){
+
+
+    //display timer fxn ta counter++ korbe and sekhan theke hr:mi:secs e
+    //divide kore display korbe screen e timer e
+    //ei display fxn ta per 1sec ontor ontor call hobe
     function displayTimer(){
         let hours=Number.parseInt(counter/3600);
         let minutes=Number.parseInt((counter%3600)/60);
@@ -110,12 +119,40 @@ function startTimer(){
         timer.innerText=`${hours}:${minutes}:${seconds}`;
         counter++;
     }
+
+    //per 1sec e displayTimer fxn ta call hobe
     timerID=setInterval(displayTimer,1000);
 }
 
 function stopTimer(){
+    //recording stop korle age oi 1sec interval e chola display fxn ta stop koro
+    //mane setInterval ta clear koro
     clearInterval(timerID);
-    timer.style.display="none";
+    
+    //timer ke abar 00:00:00 set kore dao
     timer.innerText="00:00:00";
+
+    //counter ke abar 0 kore dao
+    counter=0;
 }
 
+//capture btn cont e click korle video er image capture hobe
+//tool.drawImage(video,0,0,canvas.width,canvas.height);
+//this line will capture the image of the video at the moment of click
+//and draw it on the canvas from 0,0 with width of canvas.width and height of canvas.height
+
+captureBtnCont.addEventListener("click",(e)=>{
+    let canvas=document.createElement("canvas");
+    canvas.width=video.videoWidth;
+    canvas.height=video.videoHeight;
+
+    let tool=canvas.getContext("2d");
+    tool.drawImage(video,0,0,canvas.width,canvas.height);
+
+    let imageURL=canvas.toDataURL();
+
+    let a=document.createElement("a");
+    a.href=imageURL;
+    a.download="image.jpg";
+    a.click();
+})
