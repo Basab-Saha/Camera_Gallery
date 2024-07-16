@@ -31,6 +31,8 @@ video {
 
     justify-content: space-around;
     padding: 1rem;
+
+    z-index: 2;
 }
 .record-btn-cont{
     background-color: #000000;
@@ -113,6 +115,8 @@ video {
     background-color: aqua;
     width: 8rem;
     height: 18rem;
+
+    z-index: 2;
 }
 .filter{
     height: 4.5rem;
@@ -148,6 +152,6 @@ video {
     width: 100vw;
     height: 100vh;
 
-    background-color:#ffa50052 ;
+    
     background-blend-mode: color-burn;
 }

@@ -9,6 +9,7 @@ let recordBtn=document.querySelector(".record-btn")
 let captureBtn=document.querySelector(".capture-btn")
 let recorder;
 let recordFlag=false;
+let canvasColor="";
 
 //constraints for the video (audio and video thakbe) // (2)
 let constraints={    
@@ -149,10 +150,28 @@ captureBtnCont.addEventListener("click",(e)=>{
     let tool=canvas.getContext("2d");
     tool.drawImage(video,0,0,canvas.width,canvas.height);
 
+    //filtering:(whenever clicked on capture button)
+    tool.fillStyle=canvasColor;
+    tool.fillRect(0,0,canvas.width,canvas.height);
+
+
     let imageURL=canvas.toDataURL();
 
     let a=document.createElement("a");
     a.href=imageURL;
     a.download="image.jpg";
     a.click();
+})
+
+//filtering
+let filterLayer=document.querySelector(".filter-layer");
+let filterElements=document.querySelectorAll(".filter");
+filterElements.forEach((filterElement)=>{
+
+    filterElement.addEventListener("click",(e)=>{
+        canvasColor=getComputedStyle(filterElement).backgroundColor;
+        
+        filterLayer.style.backgroundColor=canvasColor;
+        
+    })
 })
