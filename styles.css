@@ -6,7 +6,7 @@ body{
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #d63a3a;
+    
 }
 
 .video-cont{
@@ -154,4 +154,20 @@ video {
 
     
     background-blend-mode: color-burn;
+}
+
+.material-icons{
+    color: white;
+    font-size: 3rem;
+}
+
+.gallery{
+    position: absolute;
+    right: 7rem;
+    bottom: 10rem;
+    z-index: 2;
+    
+}
+.gallery:hover{
+    cursor: pointer;
 }

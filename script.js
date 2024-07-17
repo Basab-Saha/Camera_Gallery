@@ -1,3 +1,5 @@
+
+
 //accessing the video element (1)
 let video=document.querySelector('video');
 
@@ -9,7 +11,7 @@ let recordBtn=document.querySelector(".record-btn")
 let captureBtn=document.querySelector(".capture-btn")
 let recorder;
 let recordFlag=false;
-let canvasColor="";
+let canvasColor="transparent";
 
 //constraints for the video (audio and video thakbe) // (2)
 let constraints={    
@@ -32,11 +34,23 @@ The MediaDevices interface of the Media Capture and
  like cameras and microphones, as well as screen sharing. 
  In essence, it lets you obtain access to any hardware source of media data.
 */
+function generateShortId(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+    }
+
+    return result;
+}
 
 navigator.mediaDevices.getUserMedia(constraints) // (3)
 .then( (stream)=>{
     video.srcObject=stream; //(3)
 
+    
     //MediaRecorder er instance lgbe tobei record hobe
     recorder=new MediaRecorder(stream);  // (4)
 
@@ -63,14 +77,32 @@ navigator.mediaDevices.getUserMedia(constraints) // (3)
 
         //er jonyo best method holo Blob
         let blob=new Blob(chunks,{type:"video/mp4"});
+
+        if(db){
+            //make a transaction request to the video object store
+            let dbTransaction=db.transaction("video","readwrite");
+            console.log("doing transaction");
+
+            let videoStore=dbTransaction.objectStore("video");
+           
+            let videoID=generateShortId(8);
+            let videoEntry={
+                id:`vid-${videoID}`,
+                blobData:blob,
+               
+            }
+            videoStore.add(videoEntry);
+        }
+
+
         //blob er url create koro
-        let videoURL=URL.createObjectURL(blob);
+       /*  let videoURL=URL.createObjectURL(blob);
 
         let a=document.createElement("a");
         a.href=videoURL;
         a.download="video.mp4";
         a.click();
-
+ */
     })
 } )
 
@@ -88,7 +120,7 @@ recordBtnCont.addEventListener("click",(e)=>{
 
     if(recordFlag){  //recording start
         recorder.start();
-
+        
         recordBtn.classList.add("scale-record");
         startTimer();
     }
@@ -154,13 +186,30 @@ captureBtnCont.addEventListener("click",(e)=>{
     tool.fillStyle=canvasColor;
     tool.fillRect(0,0,canvas.width,canvas.height);
 
-
     let imageURL=canvas.toDataURL();
+
+    if(db){
+        //make a transaction request to the video object store
+        let dbTransaction=db.transaction("image","readwrite");
+        console.log("doing transaction");
+
+        let imageStore=dbTransaction.objectStore("image");
+       
+        let imageID=generateShortId(8);
+        let imageEntry={
+            id:`img-${imageID}`,
+            blobData:imageURL,
+           
+        }
+        imageStore.add(imageEntry);
+    }
+
+    /* 
 
     let a=document.createElement("a");
     a.href=imageURL;
     a.download="image.jpg";
-    a.click();
+    a.click(); */
 })
 
 //filtering

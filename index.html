@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camera+Gallery</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -32,9 +34,20 @@
     </div>
 
     <div class="filter-layer">
-        
+
     </div>
 
-    <script src="./script.js"></script>
+    <span class="material-icons gallery">
+        collections
+        </span>
+
+    <script src="./db.js"></script>
+    <script  src="./script.js"></script>
+    <script>
+        let gallery=document.querySelector('.gallery');
+        gallery.addEventListener('click',(e)=>{
+            location.assign("./gallery.html");
+        })
+    </script>
 </body>
 </html>
